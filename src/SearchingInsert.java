@@ -1,21 +1,29 @@
 public class SearchingInsert {
 
-    public int searchInsert(int[] nums, int target){
+    //Object is to find the index where our target value should be inserted into our integer array.
+    public int searchInsert(int[] nums, int target) {
 
-        int index = 0;
-        //Traverse the array, if the target is less than or equal to the element at the current index,
-        //then we will return the index. If we reach the end of the array and our target is still greater,
-        //then we will return the last element + 1.
-        for(int i = 0; i < nums.length; i++){
-            if(target == nums[i] || target < nums[i]){
-                index = i;
-                System.out.println("Index is: " + index);
-                return index;
+        int leftBound = 0;
+        int rightBound = nums.length - 1;
+        int middle = nums.length / 2;
+
+        while (leftBound <= rightBound) {
+
+            //If target is found at middle, then return middle as our index.
+            //If target is > element at middle, then make left bound = middle + 1, and update our middle
+            //If target is < element at middle, then make right bound = middle - 1, and update our middle. 
+            if (target == nums[middle]) {
+                return middle;
             }
-            if(i == nums.length - 1){
-                return i + 1;
+            else if (target > nums[middle]) {
+                leftBound = middle + 1;
+                middle = leftBound + (rightBound - leftBound) / 2;
+            }
+            else{
+                rightBound = middle - 1;
+                middle = leftBound + (rightBound - leftBound) / 2;
             }
         }
-        return index;
+        return leftBound;
     }
 }
